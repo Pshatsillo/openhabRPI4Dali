@@ -12,17 +12,20 @@
  */
 package org.openhab.binding.rpi4dali.internal;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * The {@link RPI4DaliConfiguration} class contains fields mapping thing configuration parameters.
  *
  * @author Petr Shatsillo - Initial contribution
  */
+@NonNullByDefault
 public class RPI4DaliConfiguration {
 
     /**
      * Sample configuration parameters. Replace with your own.
      */
-    public String hostname;
-    public String password;
+    public String address = "";
+    public String sequence = "";
     public int refreshInterval;
 }

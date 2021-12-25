@@ -24,11 +24,10 @@ import org.openhab.core.thing.ThingTypeUID;
 @NonNullByDefault
 public class RPI4DaliBindingConstants {
 
-    private static final String BINDING_ID = "rpi4dali";
-
-    // List of all Thing Type UIDs
-    public static final ThingTypeUID THING_TYPE_SAMPLE = new ThingTypeUID(BINDING_ID, "sample");
-
     // List of all Channel ids
-    public static final String CHANNEL_1 = "channel1";
+    public static final String DIMMER = "dimmer";
+    public static final String SWITCH = "switch";
+    private static final String BINDING_ID = "rpi4dali";
+    // List of all Thing Type UIDs
+    public static final ThingTypeUID DALI_BUS = new ThingTypeUID(BINDING_ID, "dalibus");
 }

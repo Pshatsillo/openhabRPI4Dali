@@ -14,6 +14,12 @@ package org.openhab.binding.rpi4dali.internal;
 
 import static org.openhab.binding.rpi4dali.internal.RPI4DaliBindingConstants.*;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.core.thing.ChannelUID;
@@ -44,57 +50,48 @@ public class RPI4DaliHandler extends BaseThingHandler {
 
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
-        if (CHANNEL_1.equals(channelUID.getId())) {
+        if (DIMMER.equals(channelUID.getId())) {
             if (command instanceof RefreshType) {
                 // TODO: handle data refresh
             }
-
-            // TODO: handle command
-
-            // Note: if communication with thing fails for some reason,
-            // indicate that by setting the status with detail information:
-            // updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR,
-            // "Could not control device at IP address x.x.x.x");
+            // Path outputFile = Paths.get("/dev/dali");
+            // try (BufferedWriter writer = Files.newBufferedWriter(outputFile)) {
+            // writer.write("230240");
+            // } catch (IOException ex) {
+            // }
         }
     }
 
     @Override
     public void initialize() {
         config = getConfigAs(RPI4DaliConfiguration.class);
-
-        // TODO: Initialize the handler.
-        // The framework requires you to return from this method quickly. Also, before leaving this method a thing
-        // status from one of ONLINE, OFFLINE or UNKNOWN must be set. This might already be the real thing status in
-        // case you can decide it directly.
-        // In case you can not decide the thing status directly (e.g. for long running connection handshake using WAN
-        // access or similar) you should set status UNKNOWN here and then decide the real status asynchronously in the
-        // background.
-
-        // set the thing status to UNKNOWN temporarily and let the background task decide for the real status.
-        // the framework is then able to reuse the resources from the thing handler initialization.
-        // we set this upfront to reliably check status updates in unit tests.
         updateStatus(ThingStatus.UNKNOWN);
 
-        // Example for background initialization:
-        scheduler.execute(() -> {
-            boolean thingReachable = true; // <background task with long running initialization here>
-            // when done do:
-            if (thingReachable) {
-                updateStatus(ThingStatus.ONLINE);
-            } else {
-                updateStatus(ThingStatus.OFFLINE);
+        scheduler.execute(this::scanDALI);
+    }
+
+    void scanDALI() {
+        BufferedReader br = null;
+        try {
+            InputStream initialStream = new FileInputStream("/dev/dali");
+            br = new BufferedReader(new InputStreamReader(initialStream));
+            // noinspection InfiniteLoopStatement
+            while (true) {
+                String line = br.readLine();
+                while (line != null) {
+                    logger.debug("Receive: {}", line);
+                }
+                logger.debug("Empty");
             }
-        });
-
-        // These logging types should be primarily used by bindings
-        // logger.trace("Example trace message");
-        // logger.debug("Example debug message");
-        // logger.warn("Example warn message");
-
-        // Note: When initialization can NOT be done set the status with more details for further
-        // analysis. See also class ThingStatusDetail for all available status details.
-        // Add a description to give user information to understand why thing does not work as expected. E.g.
-        // updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
-        // "Can not access device as username and/or password are invalid");
+        } catch (IOException e) {
+            logger.debug("error int: {}", e.getLocalizedMessage());
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+            }
+        }
     }
 }

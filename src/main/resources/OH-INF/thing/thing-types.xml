@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<thing:thing-descriptions bindingId="rpi4dali"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+<thing:thing-descriptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0" bindingId="rpi4daliprotocol"
 	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Sample Thing Type -->
-	<thing-type id="sample">
-		<!-- Comment this in for Things which need a Bridge to function.
-			<supported-bridge-type-refs>
-			<bridge-type-ref id="RPI4DaliBridge" />
-			</supported-bridge-type-refs>
-		-->
+	<thing-type id="dalibus">
 
-		<label>RPI4Dali Binding Thing</label>
-		<description>Sample thing for RPI4Dali Binding</description>
+		<label>RPi4DaliProtocol Binding Thing</label>
+		<description>Thing for RPi4DaliProtocol Binding</description>
 
 		<channels>
-			<channel id="channel1" typeId="sample-channel"/>
+			<channel id="dimmer" typeId="dimmer-channel"/>
 		</channels>
 
 		<config-description>
-			<parameter name="hostname" type="text" required="true">
-				<context>network-address</context>
-				<label>Hostname</label>
-				<description>Hostname or IP address of the device</description>
+			<parameter name="sequence" type="text" required="true">
+				<label>sequence</label>
+				<description>Unique number for status reading. Must be set from 0 to FE</description>
 			</parameter>
-			<parameter name="password" type="text" required="true">
-				<context>password</context>
-				<label>Password</label>
-				<description>Passwort to access the device</description>
+			<parameter name="address" type="text" required="true">
+				<label>address</label>
+				<description>Address of DALI device</description>
 			</parameter>
 			<parameter name="refreshInterval" type="integer" unit="s" min="1">
 				<label>Refresh Interval</label>
@@ -37,10 +28,9 @@
 		</config-description>
 	</thing-type>
 
-	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>Number:Temperature</item-type>
-		<label>Example Temperature</label><!-- Use uppercase words, except prepositions. 2-3 words, max 25 chars -->
-		<description>Sample channel for RPI4Dali Binding</description>
+	<channel-type id="dimmer-channel">
+		<item-type>Dimmer</item-type>
+		<label>Dimmer</label>
+		<description>Select this, if your device is support dimming</description>
 	</channel-type>
 </thing:thing-descriptions>

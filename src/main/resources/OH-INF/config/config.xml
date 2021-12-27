@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config-description:config-descriptions
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:config-description="https://openhab.org/schemas/config-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/config-description/v1.0.0 https://openhab.org/schemas/config-description-1.0.0.xsd">
+	<config-description uri="channel-type:rpi4dali:dali-parameter">
+		<parameter name="sequence" type="text" required="true">
+			<label>sequence</label>
+			<description>Unique number for status reading. Must be set from 0 to FE</description>
+		</parameter>
+		<parameter name="address" type="text" required="true">
+			<label>address</label>
+			<description>Address of DALI device</description>
+		</parameter>
+	</config-description>
+</config-description:config-descriptions>

@@ -1,36 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <thing:thing-descriptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0" bindingId="rpi4daliprotocol"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0" bindingId="rpi4dali"
 	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
 
-	<thing-type id="dalibus">
-
+	<thing-type id="dalibus" extensible="dimmer, switch">
 		<label>RPi4DaliProtocol Binding Thing</label>
 		<description>Thing for RPi4DaliProtocol Binding</description>
-
-		<channels>
-			<channel id="dimmer" typeId="dimmer-channel"/>
-		</channels>
-
-		<config-description>
-			<parameter name="sequence" type="text" required="true">
-				<label>sequence</label>
-				<description>Unique number for status reading. Must be set from 0 to FE</description>
-			</parameter>
-			<parameter name="address" type="text" required="true">
-				<label>address</label>
-				<description>Address of DALI device</description>
-			</parameter>
-			<parameter name="refreshInterval" type="integer" unit="s" min="1">
-				<label>Refresh Interval</label>
-				<description>Interval the device is polled in sec.</description>
-			</parameter>
-		</config-description>
 	</thing-type>
 
-	<channel-type id="dimmer-channel">
+	<channel-type id="dimmer">
 		<item-type>Dimmer</item-type>
 		<label>Dimmer</label>
-		<description>Select this, if your device is support dimming</description>
+		<description></description>
+		<config-description-ref uri="channel-type:rpi4dali:dali-parameter"/>
 	</channel-type>
+	<channel-type id="switch">
+		<item-type>Switch</item-type>
+		<label>Switch</label>
+		<description></description>
+		<config-description-ref uri="channel-type:rpi4dali:dali-parameter"/>
+	</channel-type>
+	<!-- <channel-type id="dimmer-channel"> -->
+	<!-- <item-type>Dimmer</item-type> -->
+	<!-- <label>Dimmer</label> -->
+	<!-- <description>Select this, if your device is support dimming</description> -->
+	<!-- </channel-type> -->
 </thing:thing-descriptions>

@@ -223,6 +223,19 @@ public class RPI4DaliHandler extends BaseThingHandler {
                                         } catch (Exception ignored) {
                                         }
                                     }
+                                } else if ("ff".equals(seq) && addr.equals(channelConfig.get("address").toString())) {
+                                    if (val.equals("00")) {
+                                        try {
+                                            updateState(channel.getUID().getId(), OnOffType.OFF);
+                                        } catch (Exception ex) {
+                                            logger.debug("Warning: {}", ex.getLocalizedMessage());
+                                        }
+                                    } else {
+                                        try {
+                                            updateState(channel.getUID().getId(), OnOffType.ON);
+                                        } catch (Exception ignored) {
+                                        }
+                                    }
                                 }
                             }
                         }
